@@ -7,6 +7,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import com.qa.orangehrm.driverfactory.BrowserFactory;
+import com.qa.orangehrm.pages.AdminPage;
+import com.qa.orangehrm.pages.JobPage;
 import com.qa.orangehrm.pages.LoginPage;
 
 public class BaseTest {
@@ -15,6 +17,8 @@ public class BaseTest {
 	BrowserFactory bf;
 	Properties prop;
 	protected LoginPage lp;
+	protected AdminPage ap;
+	protected JobPage jp;
 	
 	@BeforeTest
 	public void setup() {
@@ -29,7 +33,7 @@ public class BaseTest {
 	
 	@AfterTest
 	public void tearDown() {
-		//driver.quit();
+		driver.quit();
 	}
 
 }

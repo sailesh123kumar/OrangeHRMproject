@@ -49,9 +49,10 @@ public class LoginPage {
 	}
 	
 	
-	public void navigateToAdminPage() {
+	public AdminPage navigateToAdminPage() {
 		WebElement adminele = ele.waitForElementToBevisible(driver, this.admin, 10);
 		ele.doClick(admin);	
+		return new AdminPage(driver);
 		}
 	
 	
