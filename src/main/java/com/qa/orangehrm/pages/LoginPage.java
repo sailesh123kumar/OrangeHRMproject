@@ -15,6 +15,7 @@ public class LoginPage {
 	private By submit = By.xpath("//button[@type='submit']");
 
 	private By admin = By.xpath("//span[text()='Admin']");
+	private By leave = By.xpath("//span[text()='Leave']");
 	
 
 	private By userImg = By.xpath("//img[@alt='profile picture']/following-sibling::p");
@@ -55,6 +56,12 @@ public class LoginPage {
 		return new AdminPage(driver);
 		}
 	
+	
+	public LeavePage navigateToLeavePage() {
+		WebElement adminele = ele.waitForElementToBevisible(driver, this.admin, 10);
+		ele.doClick(leave);	
+		return new LeavePage(driver);
+		}
 	
 	public void logout() {
 		ele.doClick(userImg);

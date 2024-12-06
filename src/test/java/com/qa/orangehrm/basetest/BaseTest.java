@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeTest;
 import com.qa.orangehrm.driverfactory.BrowserFactory;
 import com.qa.orangehrm.pages.AdminPage;
 import com.qa.orangehrm.pages.JobPage;
+import com.qa.orangehrm.pages.LeavePage;
 import com.qa.orangehrm.pages.LoginPage;
 
 public class BaseTest {
@@ -19,6 +20,7 @@ public class BaseTest {
 	protected LoginPage lp;
 	protected AdminPage ap;
 	protected JobPage jp;
+	protected LeavePage lep;
 	
 	@BeforeTest
 	public void setup() {
