@@ -24,18 +24,13 @@ public class JobPage {
 	private By jobTitle = By.xpath("//label[text()='Job Title']/../following-sibling::div/input");
 	private By jobDescription = By.xpath("//textarea[@placeholder='Type description here']");
 	private By upload = By.cssSelector("input.oxd-file-input");
-
 	private By addNote = By.xpath("//textarea[@placeholder='Add note']");
 	private By save = By.xpath("//button[@type='submit']");
 	private By row = By.xpath("(//div[@class='oxd-table-body']/div/div)");
-
-	// (//div[@class='oxd-table-body']/div/div)//div[@role='cell'][2]
-
-	private By validateJobTitle = By.xpath("//div[text()='Test Engineer']");
-	private By editJobTitle = By
-			.xpath("(//div[text()='Test Engineer']/following::div[@class='oxd-table-cell-actions']//button)[last()]");
-	private By deleteJobTitle = By
-			.xpath("(//div[text()='Test Engineer']/following::div[@class='oxd-table-cell-actions']//button)[last()-1]");
+	
+	private By jobtitlecolumn =By.xpath("//div[@class='oxd-table-body']//div[@role='row']//div[@role='cell'][2]/div");
+	private By editButton = By.xpath("//div[text()='Test Engineer']/../following-sibling::div[2]//button[last()]");
+	private By deleteButton = By.xpath("//div[text()='SDET Test Engineer']/../following-sibling::div[2]//button[last()-1]");
 	private By yesdel = By.xpath("//button[normalize-space()='Yes, Delete']");
 
 	public boolean headervalidation() {
@@ -43,83 +38,66 @@ public class JobPage {
 		return ele.doIsDisplayed(jobtitleheader);
 	}
 
-	public void fillJobDetails() {
-		ele.doClick(add);
-		ele.doSendkey(jobTitle, "Test Engineer", 15);
-		ele.doSendkey(jobDescription, "SDET Engineer");
-		ele.doSendkey(upload,
-				"C:\\Users\\DELL\\eclipse-workspace\\OrangeHRM\\src\\test\\resources\\testdata\\paymentreceipt.pdf");
-		ele.doSendkey(addNote, "Testing");
+	public void fillJobDetails(String jobTitle, String jobDescription, String filePath,String notes) {
+		ele.doClick(add, driver, 10);
+		ele.doSendkey(this.jobTitle, jobTitle, 15);
+		ele.doSendkey(this.jobDescription, jobDescription);
+		ele.doSendkey(upload, filePath);
+		ele.doSendkey(addNote, notes);
 		ele.doClick(save);
 	}
-
-	public boolean validateJobTitleAvailabiliy(String jobTitleName) {
-		ele.waitForVisibilityofElementsLocated(row, 10);
-		List<WebElement> rows = ele.getElements(row);
-		System.out.println(rows.size());
-		for (int i = 1; i <= rows.size(); i++) {
-			String titlename = driver
-					.findElement(
-							By.xpath("((//div[@class='oxd-table-body']/div/div)//div[@role='cell'][2]/div)[" + i + "]"))
-					.getText();
-			//System.out.println(titlename);
-
-			if (titlename.equals(jobTitleName)) {   //"Test Engineer"
-
-				return true;
-			}
-		}
-		return false;
+	
+	
+	public boolean validateJobTitleAvailability(String jobTitleName) {
+		List<WebElement> jobTitleElements = ele.waitForVisibilityofElementsLocated(jobtitlecolumn, 10);
+	    for (WebElement element : jobTitleElements) {
+	        String titlename = element.getText();
+	        if (titlename.equals(jobTitleName)) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 
-	public void deleteTitle() {
-		ele.waitForVisibilityofElementsLocated(row, 10);
-		List<WebElement> rows = ele.getElements(row);
-		System.out.println(rows.size());
-		for (int i = 1; i <= rows.size(); i++) {
-			String titlename = driver
-					.findElement(
-							By.xpath("((//div[@class='oxd-table-body']/div/div)//div[@role='cell'][2]/div)[" + i + "]"))
-					.getText();
-			//System.out.println(titlename);
 
-			if (titlename.equals("SDET Test Engineer")) {
 
-				driver.findElement(By.xpath("//div[text()='SDET Test Engineer']/../following-sibling::div[2]//button[last()-1]")).click();
+	public void deleteTitle(String jobTitleName) {
+		List<WebElement> jobTitleElements = ele.waitForVisibilityofElementsLocated(jobtitlecolumn, 10);
+		for (WebElement jobTitleElement : jobTitleElements) {
+			String currentTitle = jobTitleElement.getText();
+			if (currentTitle.equals(jobTitleName)) {
+				ele.doClick(deleteButton);
 				ele.doClick(yesdel,driver,10);
 				break;
 			}
 		}
-
 	}
 	
-	public void editJobtitle() {
-		
-		ele.waitForVisibilityofElementsLocated(row, 10);
-		List<WebElement> rows = ele.getElements(row);
-		System.out.println(rows.size());
-		for (int i = 1; i <= rows.size(); i++) {
-			String titlename = driver
-					.findElement(
-							By.xpath("((//div[@class='oxd-table-body']/div/div)//div[@role='cell'][2]/div)[" + i + "]"))
-					.getText();
-			//System.out.println(titlename);
+	public void editJobtitle(String jobTitle) {
+		List<WebElement> jobTitleElements = ele.waitForVisibilityofElementsLocated(jobtitlecolumn, 10);
 
-			if (titlename.equals("Test Engineer")) {
+	    for (WebElement jobTitleElement : jobTitleElements) {
+	        String currentTitle = jobTitleElement.getText();
 
-				driver.findElement(By.xpath("//div[text()='Test Engineer']/../following-sibling::div[2]//button[last()]")).click();
-				WebElement jobTitl = ele.waitForElementToBevisible(driver, jobTitle, 10);
-				ele.doClick(jobTitle);
-				ele.doSendkey(jobTitle, Keys.CONTROL+"A");
-				jobTitl.sendKeys(Keys.DELETE );    //Getting and deleting with webElement reference
-				ele.doSendkey(jobTitle, "SDET Test Engineer");
-				ele.doClick(save);
-				break;
-			}
-		}
+	        if (currentTitle.equals(jobTitle)) {
+	            ele.doClick(editButton);
+	            WebElement jobTitlField = ele.waitForElementToBevisible(driver, this.jobTitle, 10);
+	            ele.doClick(this.jobTitle);
+	            ele.doSendkey(this.jobTitle, Keys.CONTROL + "A"); // Select all text
+	            jobTitlField.sendKeys(Keys.DELETE); // Delete the existing text
+	            ele.doSendkey(this.jobTitle, "SDET Test Engineer");
+	            ele.doClick(save);
+	            break;
+	        }
+	    }
+	}
+
+	
+	
+
 
 		
 		
 	}
 
-}
+

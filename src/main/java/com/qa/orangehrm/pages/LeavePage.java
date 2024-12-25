@@ -26,17 +26,19 @@ public class LeavePage {
 	private By applyleave = By.xpath("//h6[text()='Apply Leave']");
 	private By select = By.xpath("(//div[contains(text(),'Select')])");
 	private By fmla = By.xpath("//span[text()='CAN - FMLA']");
-	private By bereavement = By.xpath("//span[text()='CAN - Bereavement']");
-	
 	private By fromDate = By.xpath("(//div[@class='oxd-date-input']/input)[last()-1]");
 	private By toDate = By.xpath("(//div[@class='oxd-date-input']/input)[last()]");
-	
-	
-	
 	private By comments = By.xpath("//textarea");
 	private By applybtn = By.xpath("//button[normalize-space()='Apply']");
-	
 	private By myLeave = By.linkText("My Leave");
+	private By cell = By.xpath("(((//div[@class='oxd-table-card']/div))//div[@role='cell'][8])");
+	private By row = By.xpath("//div[@class='oxd-table-card']/div");
+	
+	private By allDays = By.xpath("//span[text()='All Days']");
+	private By halfDayMorning = By.xpath("//span[text()='Half Day - Morning']");
+	private By labelLeaveBalance = By.xpath("//label[text()='Leave Balance']");
+	private By cancelledText = By.xpath("(//div[text()='Testing sick leave']/../preceding-sibling::div)[last()]");
+	
 	
 	public void clickApply() {
 		ele.doClick(apply, driver, 10);
@@ -54,45 +56,47 @@ public class LeavePage {
 		WebElement toDatefield = ele.waitForElementToBevisible(driver, toDate, 3);
 		ele.doSendkey(toDate, Keys.CONTROL+"a");
 		toDatefield.sendKeys(Keys.DELETE);
-		ele.doSendkey(toDate, getTodayDate());
+		ele.doSendkey(toDate, getFutureDate(5));
+		ele.doClick(labelLeaveBalance);
+		ele.doClick(select, driver, 6);
+		ele.doClick(allDays, driver, 6);
+		ele.doClick(select, driver, 6);
+		ele.doClick(halfDayMorning, driver, 6);
 		ele.doSendkey(comments, "Testing sick leave");
 		ele.doClick(applybtn);
 	}
 	
-	public void cancelMyLeave() {
+	public void cancelMyLeave(String comment) {
 		ele.doClick(myLeave, driver, 20);
-		ele.waitForVisibilityofElementsLocated(By.cssSelector(".oxd-table-card"), 15);
-		List<WebElement> rows = ele.getElements(By.cssSelector(".oxd-table-card"));
-		
-		for (int i = 1; i <=rows.size(); i++) {
-			
-			String text = driver.findElement(By.xpath("((//div[@class='oxd-table-card']//div[@role='row'])["+i+"]//div[@role='cell'])[8]")).getText();
-			
-			if(text.equals("Testing sick leave")) {
-				driver.findElement(By.xpath("(//div[@class='oxd-table-card']//div[@role='row'])["+i+"]//div[text()='Testing sick leave']/following::button[normalize-space()='Cancel']")).click();
-				break;
+		List<WebElement> rows = ele.waitForVisibilityofElementsLocated(cell, 15);
+
+		for (WebElement row : rows) {
+			String text = row.getText(); // Get the 8th cell
+			if (text.equals(comment)) {
+				By cancel = By.xpath("(//div[text()='"+comment+"']/following::button[normalize-space()='Cancel'])[1]");
+				WebElement cancelButton = row.findElement(cancel);
+				cancelButton.click();
+				break; // Exit loop once the cancel action is performed
 			}
-			
 		}
 	}
+
 	
-	//Cancelled (1.00)
-	
-	public void verifycancelLeavestatus() {
+
+	public String verifycancelLeavestatus(String comment) {
 		ele.doClick(myLeave, driver, 20);
-		ele.waitForVisibilityofElementsLocated(By.cssSelector(".oxd-table-card"), 15);
-		List<WebElement> rows = ele.getElements(By.cssSelector(".oxd-table-card"));
+		List<WebElement> rows = ele.waitForVisibilityofElementsLocated(cell, 15);
 		
-		for (int i = 1; i <=rows.size(); i++) {
-			
-			String text = driver.findElement(By.xpath("((//div[@class='oxd-table-card']//div[@role='row'])["+i+"]//div[@role='cell'])[7]")).getText();
-			
-			if(text.equals("Cancelled (1.00)")) {
-				System.out.println("Leave Cancellation Successful");
-				break;
+		for (WebElement row : rows) {
+			String text= row.getText();
+			if (text.equals(comment)) {
+			    String cancelled= ele.doGetText(cancelledText);
+			    return cancelled;
 			}
-			
 		}
+		
+		
+		return null;
 	}
 	
 	public String getTodayDate() {

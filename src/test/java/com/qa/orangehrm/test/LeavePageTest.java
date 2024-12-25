@@ -10,9 +10,9 @@ public class LeavePageTest extends BaseTest{
 	
 	
 	@BeforeClass
-	public void adminSetUp() {
-		lp.doLogin("Admin", "admin123");
-		lep = lp.navigateToLeavePage();
+	public void leavePageSetUp() {
+		hp = lp.doLogin(prop.getProperty("username"), prop.getProperty("password"));
+		lep = hp.navigateToLeavePage();
 		
 	}
 	
@@ -21,8 +21,9 @@ public class LeavePageTest extends BaseTest{
 		lep.clickApply();
 		Assert.assertTrue(lep.headerValidation());
 		lep.enterLeaveDetails();
-		lep.cancelMyLeave();
-		lep.verifycancelLeavestatus();
+		lep.cancelMyLeave("Testing sick leave");
+		String verifycancelLeavestatus = lep.verifycancelLeavestatus("Testing sick leave");
+		Assert.assertEquals(verifycancelLeavestatus, "Cancelled (1.00)");
 		lp.logout();
 	}
 

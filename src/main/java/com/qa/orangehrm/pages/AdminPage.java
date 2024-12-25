@@ -17,26 +17,21 @@ public class AdminPage {
 	
 	private By userManagement = By.xpath("//span[text()='User Management ']");
 	private By add = By.xpath("//button[normalize-space()='Add']");
-	
 	private By userRole = By.xpath("(//div[contains(text(),'Select')])[last()-1]");
 	private By ess = By.xpath("//span[text()='ESS']");
+	private By employeeName = By.xpath("//input[contains(@placeholder,'Type for hints')]");
+	private By suggestlist = By.xpath("//span[text()='Ranga  Akunuri']");
 	private By status = By.xpath("(//div[contains(text(),'Select')])[last()]");
 	private By disabled = By.xpath("//span[text()='Disabled']");
-	private By employeename = By.xpath("//input[contains(@placeholder,'Type for hints')]");
-	private By username = By.xpath("//label[text()='Username']/../following-sibling::div/input");
+	private By userName = By.xpath("//label[text()='Username']/../following-sibling::div/input");
 	private By password = By.xpath("(//input[@type='password'])[last()-1]");
 	private By confirm = By.xpath("(//input[@type='password'])[last()]");
 	private By save = By.xpath("//button[@type='submit']");
-	private By suggestlist = By.xpath("//span[text()='Ranga  Akunuri']");
 	private By systemuser = By.xpath("//h5[text()='System Users']");
 	private By search = By.xpath("//button[normalize-space()='Search']");
-	private By tablevalidation = By.xpath("//div[text()='TestUserCreation']");
 	private By delCheckBox = By.xpath("(//input[@type='checkbox']/following-sibling::span)[last()]");
 	private By delBtn = By.cssSelector(".oxd-icon.bi-trash");
 	private By yesdel = By.xpath("//button[normalize-space()='Yes, Delete']");
-	
-	
-	
 	
 	private By job = By.xpath("//span[.='Job ']");
 	private By jobtitles = By.xpath("//a[.='Job Titles']");
@@ -51,7 +46,8 @@ public class AdminPage {
 	
 	
 	
-	public String checkUserPresence() {
+	public String checkUserPresence(String userName) {
+		By tablevalidation = By.xpath("//div[text()='"+userName+"']");
 		ele.waitForElementToBevisible(driver, tablevalidation, 10);
 		return ele.doGetText(tablevalidation);
 	}
@@ -61,24 +57,24 @@ public class AdminPage {
 		ele.doClick(add, driver, 5);
 	}
 	
-	public void adduserdetails() {
-		 clickaddbtn();
-		ele.doClick(userRole,driver,5);
+	public void adduserdetails(String userName, String password , String employeeName) {
+		clickaddbtn();
+		ele.doClick(userRole, driver, 5);
 		ele.doClick(ess);
-		ele.doSendkey(employeename, "Ranga Akunuri");
-		ele.doClick(suggestlist,driver,6);
+		ele.doSendkey(this.employeeName, employeeName);
+		ele.doClick(suggestlist, driver, 6);
 		ele.doClick(status);
 		ele.doClick(disabled);
-		ele.doSendkey(username, "TestUserCreation");
-		ele.doSendkey(password, "testing123");
-		ele.doSendkey(confirm, "testing123");
+		ele.doSendkey(this.userName, userName);
+		ele.doSendkey(this.password, password);
+		ele.doSendkey(confirm, password);
 		ele.doClick(save);
 	}
 	
 	
-	public void searchUser() {
+	public void searchUser(String userName) {
 		ele.waitForElementToBevisible(driver, systemuser, 10);
-		ele.doSendkey(username, "TestUserCreation");
+		ele.doSendkey(this.userName, userName);
 		ele.doClick(search);
 	}
 	
