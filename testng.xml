@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite parallel="tests" name="Suite">
+  <test thread-count="5" parallel="tests" name="Test">
+    <classes>
+      <class name="com.qa.orangehrm.test.Scenario1_HomePagetest"/>
+      <class name="com.qa.orangehrm.test.LoginPageTest"/>
+      <class name="com.qa.orangehrm.test.Scenario2_AdminPageTest"/>
+      <class name="com.qa.orangehrm.test.Scenario4_LeavePageTest"/>
+      <class name="com.qa.orangehrm.test.Scenario3_JobPageTest"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

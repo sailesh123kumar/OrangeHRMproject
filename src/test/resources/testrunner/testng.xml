@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite parallel="tests" name="Suite" thread-count="3" verbose="3">
+	
+<!--	<test name="Homepage test">-->
+<!--		<classes>-->
+<!--			<class name="com.qa.orangehrm.test.Scenario1_HomePagetest" />-->
+<!--		</classes>-->
+<!--	</test>-->
 
-<suite name="TestNG Regression Suite" verbose="3" thread-count="3"
-	parallel="tests">
-  <test  name="LogIn Page Test" >
-    <classes>
-      <class name="com.qa.orangehrm.test.LoginPageTest"/>
-    </classes>
-  </test> <!-- Test -->
-  
-  
-   <test  name="AdminPage Page Test" >
-    <classes>
-      <class name="com.qa.orangehrm.test.AdminPageTest"/>
-    </classes>
-  </test>
-  
-  
-    <test  name="Leave Page Test" >
-    <classes>
-      <class name="com.qa.orangehrm.test.LeavePageTest"/>
-    </classes>
-  </test>
-  
-  
-   <test  name="Job Page Test" >
-    <classes>
-      <class name="com.qa.orangehrm.test.JobPageTest"/>
-    </classes>
-  </test>
-</suite> <!-- Suite -->
+<!--	<test name="AdminPage test">-->
+<!--		<classes>-->
+<!--			<class name="com.qa.orangehrm.test.Scenario2_AdminPageTest" />-->
+<!--		</classes>-->
+<!--	</test>-->
+
+<!--	<test name="JobPage test">-->
+<!--		<classes>-->
+<!--			<class name="com.qa.orangehrm.test.Scenario3_JobPageTest" />-->
+<!--		</classes>-->
+<!--	</test>-->
+
+	<test name="LeavePage test">
+		<classes>
+			<class name="com.qa.orangehrm.test.Scenario4_LeavePageTest" />
+		</classes>
+	</test>
+
+	<!-- Test -->
+</suite> <!--
+Suite -->
