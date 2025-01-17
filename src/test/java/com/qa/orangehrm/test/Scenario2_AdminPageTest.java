@@ -1,17 +1,15 @@
 package com.qa.orangehrm.test;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.qa.orangehrm.basetest.BaseTest;
-import com.qa.orangehrm.constants.AppConstants;
-import com.qa.orangehrm.pages.AdminPage;
 
 public class Scenario2_AdminPageTest extends BaseTest {
 
-	@BeforeMethod
+	@BeforeClass
 	public void adminSetUp() {
 		hp = lp.doLogin(prop.getProperty("username"), prop.getProperty("password"));
 		ap = hp.navigateToAdminPage();
@@ -24,13 +22,14 @@ public class Scenario2_AdminPageTest extends BaseTest {
 
 	@Test
 	public void addAndDeleteUser_Scenario2Test() {
-		ap.adduserdetails("TestUserCreation" , "testing123" , "Ranga Akunuri");
+		ap.adduserdetails("TestUserCreation" , "testing123" , "Sama  Rique");
 		ap.searchUser("TestUserCreation");
 		Assert.assertEquals(ap.checkUserPresence("TestUserCreation"), "TestUserCreation");
 		ap.deleteUser();
 		
 	}
 	
+	@AfterClass
 	public void logout() {
 		lp.logout();
 	}

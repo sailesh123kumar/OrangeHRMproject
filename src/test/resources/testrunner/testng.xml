@@ -2,23 +2,23 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite parallel="tests" name="Suite" thread-count="3" verbose="3">
 	
-<!--	<test name="Homepage test">-->
-<!--		<classes>-->
-<!--			<class name="com.qa.orangehrm.test.Scenario1_HomePagetest" />-->
-<!--		</classes>-->
-<!--	</test>-->
+	<test name="Homepage test">
+		<classes>
+			<class name="com.qa.orangehrm.test.Scenario1_HomePagetest" />
+		</classes>
+	</test>
 
-<!--	<test name="AdminPage test">-->
-<!--		<classes>-->
-<!--			<class name="com.qa.orangehrm.test.Scenario2_AdminPageTest" />-->
-<!--		</classes>-->
-<!--	</test>-->
+	<test name="AdminPage test">
+		<classes>
+			<class name="com.qa.orangehrm.test.Scenario2_AdminPageTest" />
+		</classes>
+	</test>
 
-<!--	<test name="JobPage test">-->
-<!--		<classes>-->
-<!--			<class name="com.qa.orangehrm.test.Scenario3_JobPageTest" />-->
-<!--		</classes>-->
-<!--	</test>-->
+	<test name="JobPage test">
+		<classes>
+			<class name="com.qa.orangehrm.test.Scenario3_JobPageTest" />
+		</classes>
+	</test>
 
 	<test name="LeavePage test">
 		<classes>

@@ -26,6 +26,7 @@ public class LeavePage {
 	private By applyleave = By.xpath("//h6[text()='Apply Leave']");
 	private By select = By.xpath("(//div[contains(text(),'Select')])");
 	private By fmla = By.xpath("//span[text()='CAN - FMLA']");
+	private By personal = By.xpath("//span[text()='CAN - Personal']");
 	private By fromDate = By.xpath("(//div[@class='oxd-date-input']/input)[last()-1]");
 	private By toDate = By.xpath("(//div[@class='oxd-date-input']/input)[last()]");
 	private By comments = By.xpath("//textarea");
@@ -51,7 +52,7 @@ public class LeavePage {
 	
 	public void enterLeaveDetails() {
 		ele.doClick(select);
-		ele.doClick(fmla, driver, 6);
+		ele.doClick(personal, driver, 6);
 		ele.doSendkey(fromDate, getTodayDate());
 		WebElement toDatefield = ele.waitForElementToBevisible(driver, toDate, 3);
 		ele.doSendkey(toDate, Keys.CONTROL+"a");

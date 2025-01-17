@@ -20,7 +20,6 @@ public class AdminPage {
 	private By userRole = By.xpath("(//div[contains(text(),'Select')])[last()-1]");
 	private By ess = By.xpath("//span[text()='ESS']");
 	private By employeeName = By.xpath("//input[contains(@placeholder,'Type for hints')]");
-	private By suggestlist = By.xpath("//span[text()='Ranga  Akunuri']");
 	private By status = By.xpath("(//div[contains(text(),'Select')])[last()]");
 	private By disabled = By.xpath("//span[text()='Disabled']");
 	private By userName = By.xpath("//label[text()='Username']/../following-sibling::div/input");
@@ -58,11 +57,12 @@ public class AdminPage {
 	}
 	
 	public void adduserdetails(String userName, String password , String employeeName) {
+		By suggestlist = By.xpath("//span[text()='"+employeeName+"']");
 		clickaddbtn();
 		ele.doClick(userRole, driver, 5);
 		ele.doClick(ess);
 		ele.doSendkey(this.employeeName, employeeName);
-		ele.doClick(suggestlist, driver, 6);
+		ele.doClick(suggestlist, driver, 10);
 		ele.doClick(status);
 		ele.doClick(disabled);
 		ele.doSendkey(this.userName, userName);
